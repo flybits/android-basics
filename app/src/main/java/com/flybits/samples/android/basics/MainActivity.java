@@ -11,15 +11,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
+import com.flybits.commons.library.SharedElements;
 import com.flybits.samples.android.basics.fragments.ConnectionFragment;
 import com.flybits.samples.android.basics.fragments.ContentFragment;
+import com.flybits.samples.android.basics.interfaces.IConnection;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IConnection {
 
     private String tagSelected = "";
     private static final String TAG_CONNECT = "TAG_FRAGMENT_CONNECTION";
     private static final String TAG_CONTENT = "TAG_FRAGMENT_CONTENT";
+
+    private TextView txtUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,10 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        View header = navigationView.getHeaderView(0);
+        txtUserId = header.findViewById(R.id.txtId);
 
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_connection));
         navigationView.setCheckedItem(R.id.nav_connection);
@@ -87,5 +97,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void connected() {
+        txtUserId.setText(getString(R.string.infoConnected));
+    }
+
+    @Override
+    public void disconnected() {
+        txtUserId.setText(getString(R.string.infoConnect));
     }
 }

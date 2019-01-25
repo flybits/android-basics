@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Flybits Basics</string>
+
+    <!-- Buttons -->
     <string name="btnConnect">Connect</string>
     <string name="btnDisconnect">Disconnect</string>
     <string name="btnCheckConnection">Is Connected?</string>
+
+    <!-- Side Menu -->
+    <string name="sideMenu1">Connecting</string>
+
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

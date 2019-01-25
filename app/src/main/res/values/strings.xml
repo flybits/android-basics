@@ -18,4 +18,8 @@
     <string name="infoConnect">Make sure you Connect!</string>
     <string name="infoConnected">You are connected to Flybits!</string>
 
+    <!-- Push Notifications -->
+    <string name="pushChannel">Flybits Push Message</string>
+    <string name="pushEmptyTitle">Received Notification</string>
+
 </resources>

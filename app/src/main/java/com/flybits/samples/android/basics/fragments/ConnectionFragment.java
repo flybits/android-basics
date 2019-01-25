@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.flybits.android.kernel.KernelScope;
+import com.flybits.android.push.PushScope;
 import com.flybits.commons.library.SharedElements;
 import com.flybits.commons.library.api.FlybitsManager;
 import com.flybits.commons.library.api.idps.AnonymousIDP;
@@ -56,6 +57,8 @@ public class ConnectionFragment extends Fragment {
                 .setProjectId(PROJECT_ID)
                 //Add Kernel Scope which is responsible for retrieving Content.
                 .addScope(KernelScope.SCOPE)
+                //Add Push Scope which is responsible for receiving Push notification from Firebase.
+                .addScope(PushScope.SCOPE)
                 .build();
 
 

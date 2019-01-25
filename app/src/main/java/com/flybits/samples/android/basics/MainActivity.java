@@ -16,6 +16,9 @@ import com.flybits.samples.android.basics.fragments.ConnectionFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String tagSelected = "";
+    private static final String TAG_CONNECT = "TAG_FRAGMENT_CONNECTION";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_connection));
         navigationView.setCheckedItem(R.id.nav_connection);
     }
 
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_connection:default:
-                tagFragment = "";
+                tagFragment = TAG_CONNECT;
                 fragmentSelected = ConnectionFragment.newInstance();
         }
 
@@ -63,10 +67,12 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layoutFragment, fragmentSelected, tagFragment)
-                .commitAllowingStateLoss();
+        if (!tagSelected.equals(tagFragment)) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.layoutFragment, fragmentSelected, tagFragment)
+                    .commitAllowingStateLoss();
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

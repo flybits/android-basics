@@ -12,12 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import com.flybits.samples.android.basics.fragments.ConnectionFragment;
+import com.flybits.samples.android.basics.fragments.ContentFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String tagSelected = "";
     private static final String TAG_CONNECT = "TAG_FRAGMENT_CONNECTION";
+    private static final String TAG_CONTENT = "TAG_FRAGMENT_CONTENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +59,16 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        switch (id){
-            case R.id.nav_connection:default:
+        switch (id) {
+            case R.id.nav_connection:
+            default:
                 tagFragment = TAG_CONNECT;
                 fragmentSelected = ConnectionFragment.newInstance();
+                break;
+            case R.id.nav_content:
+                tagFragment = TAG_CONTENT;
+                fragmentSelected = ContentFragment.newInstance();
+                break;
         }
 
         if (id == R.id.nav_connection) {
@@ -68,6 +76,8 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (!tagSelected.equals(tagFragment)) {
+
+            tagSelected = tagFragment;
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layoutFragment, fragmentSelected, tagFragment)

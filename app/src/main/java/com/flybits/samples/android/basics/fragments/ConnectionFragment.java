@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.flybits.android.kernel.KernelScope;
+import com.flybits.commons.library.SharedElements;
 import com.flybits.commons.library.api.FlybitsManager;
 import com.flybits.commons.library.api.idps.AnonymousIDP;
 import com.flybits.commons.library.api.idps.FlybitsIDP;
@@ -22,6 +23,8 @@ import com.flybits.samples.android.basics.MainActivity;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.interfaces.IConnection;
 
+import java.util.ArrayList;
+
 public class ConnectionFragment extends Fragment {
 
     private FlybitsManager manager;
@@ -29,6 +32,8 @@ public class ConnectionFragment extends Fragment {
 
     private IConnection iConnection;
     private Button btnConnect, btnDisconnect;
+
+    private static final String CODE_ENGLISH_LANGUAGE = "en";
 
     public static Fragment newInstance(){
         ConnectionFragment frag = new ConnectionFragment();
@@ -52,6 +57,12 @@ public class ConnectionFragment extends Fragment {
                 //Add Kernel Scope which is responsible for retrieving Content.
                 .addScope(KernelScope.SCOPE)
                 .build();
+
+
+        //Setup main languages
+        ArrayList<String> listOfLanguages = new ArrayList<>();
+        listOfLanguages.add(CODE_ENGLISH_LANGUAGE);
+        SharedElements.INSTANCE.setLocalization(listOfLanguages);
     }
 
     @Nullable

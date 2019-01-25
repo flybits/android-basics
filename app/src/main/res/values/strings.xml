@@ -5,6 +5,8 @@
     <string name="btnConnect">Connect</string>
     <string name="btnDisconnect">Disconnect</string>
     <string name="btnCheckConnection">Is Connected?</string>
+    <string name="btnGetRelevant">Get Relevant Content</string>
+    <string name="btnGetContent">Get All Content</string>
 
     <!-- Side Menu -->
     <string name="sideMenu1">Connecting</string>

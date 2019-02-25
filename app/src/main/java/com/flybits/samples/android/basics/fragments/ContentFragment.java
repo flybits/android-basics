@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +19,9 @@ import com.flybits.samples.android.basics.R;
 import java.util.ArrayList;
 
 public class ContentFragment extends Fragment {
+
+    public static final String CACHING_KEY_RELEVANT = "com.flybits.basics.caching.RELEVANT";
+    public static final String MENU_ITEM_TYPE = "menuitem";
 
     public static Fragment newInstance(){
         ContentFragment frag = new ContentFragment();
@@ -42,14 +46,32 @@ public class ContentFragment extends Fragment {
         btnGetRelevant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /************************************************************************
+                 * SETUP: Step 1a - Get only the Content that is relevant to me.
+                 ***********************************************************************/
                 ContentParameters parameters = new ContentParameters.Builder()
                         .setPaging(10, 0)
+                        .setTemplateType(MENU_ITEM_TYPE)
                         .build();
 
                 Content.get(getContext(), parameters, new PagedResultCallback<Content>() {
                     @Override
                     public void onSuccess(ArrayList<Content> items) {
-
+                        /************************************************************************
+                         * SETUP: Step 2 - Look at com.flybits.samples.android.basics.contentdata.MenuItem class.
+                         *        Step 3 - Parse Content into your Content Data class -
+                         ***********************************************************************/
+                        for (Content item : items){
+                            //Make the item is of the type you want (Get this from your Content Template in the Dev Portal
+                            if(item.getType().equals(MENU_ITEM_TYPE)){
+                                try {
+                                    MenuItem menuItem = item.getData(MenuItem.class);
+                                    //Do Something with your new Item - like add it to a RecyclerView
+                                }catch (FlybitsException e){
+                                    //You MenuItem does not form the same structure as the Content Template that you created in your Project. Please confirm you Content Data class.
+                                }
+                            }
+                        }
                     }
 
                     @Override
@@ -68,6 +90,9 @@ public class ContentFragment extends Fragment {
         btnGetContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /************************************************************************
+                 * SETUP: Step 1b - Get only the Content that is closest to me (this does not need to be in an experience)
+                 ***********************************************************************/
                 ContentParameters parameters = new ContentParameters.Builder()
                         .setPaging(10, 0)
                         .setLocation("address", 43.656, -79.656, 100)

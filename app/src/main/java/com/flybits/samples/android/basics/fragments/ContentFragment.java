@@ -15,7 +15,7 @@ import com.flybits.android.kernel.utilities.ContentParameters;
 import com.flybits.commons.library.api.results.callbacks.PagedResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
 import com.flybits.samples.android.basics.R;
-import com.flybits.samples.android.basics.contentdata.MenuItem;
+import com.flybits.samples.android.basics.contentdata.MenuOption;
 
 import java.util.ArrayList;
 
@@ -60,18 +60,18 @@ public class ContentFragment extends Fragment {
                     @Override
                     public void onSuccess(ArrayList<Content> items) {
                         /************************************************************************
-                         * SETUP: Step 2 - Look at com.flybits.samples.android.basics.contentdata.MenuItem class.
+                         * SETUP: Step 2 - Look at com.flybits.samples.android.basics.contentdata.MenuOption class.
                          *        Step 3 - Parse Content into your Content Data class -
                          ***********************************************************************/
                         for (Content item : items){
                             //Make the item is of the type you want (Get this from your Content Template in the Dev Portal
                             if(item.getType().equals(MENU_ITEM_TYPE)){
                                 try {
-                                    MenuItem menuItem = item.getData(MenuItem.class);
+                                    MenuOption menuItem = item.getData(MenuOption.class);
                                     Log.d(TAG, "Item Name: " + menuItem.name);
                                     //Do Something with your new Item - like add it to a RecyclerView
                                 }catch (FlybitsException e){
-                                    //You MenuItem does not form the same structure as the Content Template that you created in your Project. Please confirm you Content Data class.
+                                    //You MenuOption does not form the same structure as the Content Template that you created in your Project. Please confirm you Content Data class.
                                 }
                             }
                         }

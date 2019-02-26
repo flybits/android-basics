@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /************************************************************************
- * SETUP: Step 2b - Content Data class for inner Nutrition which is an object inside MenuItem
+ * SETUP: Step 2b - Content Data class for inner Nutrition which is an object inside MenuOption
  ***********************************************************************/
 public class Nutrition implements Parcelable {
 

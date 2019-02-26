@@ -4,18 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /************************************************************************
- * SETUP: Step 2a - Content Data class for MenuItem Content Template
+ * SETUP: Step 2a - Content Data class for MenuOption Content Template
  ***********************************************************************/
-public class MenuItem implements Parcelable {
+public class MenuOption implements Parcelable {
 
     public String name;
     public String description;
     public String price;
     public Nutrition nutrition;
 
-    public MenuItem(){}
+    public MenuOption(){}
 
-    protected MenuItem(Parcel in) {
+    protected MenuOption(Parcel in) {
         name = in.readString();
         description = in.readString();
         price = in.readString();
@@ -35,15 +35,15 @@ public class MenuItem implements Parcelable {
         return 0;
     }
 
-    public static final Creator<MenuItem> CREATOR = new Creator<MenuItem>() {
+    public static final Creator<MenuOption> CREATOR = new Creator<MenuOption>() {
         @Override
-        public MenuItem createFromParcel(Parcel in) {
-            return new MenuItem(in);
+        public MenuOption createFromParcel(Parcel in) {
+            return new MenuOption(in);
         }
 
         @Override
-        public MenuItem[] newArray(int size) {
-            return new MenuItem[size];
+        public MenuOption[] newArray(int size) {
+            return new MenuOption[size];
         }
     };
 }

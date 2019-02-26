@@ -1,21 +1,19 @@
 package com.flybits.samples.android.basics;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.flybits.commons.library.SharedElements;
 import com.flybits.samples.android.basics.fragments.ConnectionFragment;
 import com.flybits.samples.android.basics.fragments.ContentFragment;
+import com.flybits.samples.android.basics.fragments.PushHistoryFragment;
 import com.flybits.samples.android.basics.interfaces.IConnection;
 
 public class MainActivity extends AppCompatActivity
@@ -24,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     private String tagSelected = "";
     private static final String TAG_CONNECT = "TAG_FRAGMENT_CONNECTION";
     private static final String TAG_CONTENT = "TAG_FRAGMENT_CONTENT";
+    private static final String TAG_PUSH_HISTORY = "TAG_FRAGMENT_PUSH_HISTORY";
 
     private TextView txtUserId;
 
@@ -78,6 +77,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_content:
                 tagFragment = TAG_CONTENT;
                 fragmentSelected = ContentFragment.newInstance();
+                break;
+            case R.id.nav_push_history:
+                tagFragment = TAG_PUSH_HISTORY;
+                fragmentSelected = PushHistoryFragment.newInstance();
                 break;
         }
 

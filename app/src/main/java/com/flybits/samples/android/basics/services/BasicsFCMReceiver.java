@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import com.flybits.android.push.FlybitsNotificationManager;
 import com.flybits.android.push.PushManager;
 import com.flybits.android.push.exceptions.FlybitsPushException;
 import com.flybits.android.push.models.Push;
@@ -19,12 +21,14 @@ import java.util.Map;
 public class BasicsFCMReceiver extends FirebaseMessagingService {
 
     private static final String NOTIFICATION_CHANNEL_FLYBITS = "com.flybits.push.channel.generic";
+    private static final String _TAG = "FCMReceiver";
 
     @Override
     public void onMessageReceived(final RemoteMessage message) {
 
-        final Map data = message.getData();
+        Log.d(_TAG, "FCM Message Received: " + message.getData().toString());
 
+        final Map data = message.getData();
         /************************************************************************
          * SETUP: Step 1
          *
@@ -37,7 +41,7 @@ public class BasicsFCMReceiver extends FirebaseMessagingService {
                 /************************************************************************
                  * Valid Flybits Push Notification
                  ***********************************************************************/
-                displayPush(push);
+                displayPushSimple(getApplicationContext(), push);
             }
 
             @Override
@@ -56,7 +60,18 @@ public class BasicsFCMReceiver extends FirebaseMessagingService {
     }
 
     /************************************************************************
-     * Sample Push Display - You are adviced to write your own based on your application's needs
+     * Simple Push Display Through Flybits
+     ***********************************************************************/
+    private void displayPushSimple(Context context, Push push){
+
+        FlybitsNotificationManager manager = new FlybitsNotificationManager.Simplifier(context, push, R.mipmap.ic_flybits_notification)
+                .build();
+
+        manager.show();
+    }
+
+    /************************************************************************
+     * Custom Push Display Through Flybits
      ***********************************************************************/
     private void displayPush(Push push) {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

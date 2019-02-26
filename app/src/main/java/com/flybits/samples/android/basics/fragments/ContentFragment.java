@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,6 +15,7 @@ import com.flybits.android.kernel.utilities.ContentParameters;
 import com.flybits.commons.library.api.results.callbacks.PagedResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
 import com.flybits.samples.android.basics.R;
+import com.flybits.samples.android.basics.contentdata.MenuItem;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class ContentFragment extends Fragment {
 
     public static final String CACHING_KEY_RELEVANT = "com.flybits.basics.caching.RELEVANT";
     public static final String MENU_ITEM_TYPE = "menuitem";
+    public static final String TAG = "_CONTENT_FRAGMENT";
 
     public static Fragment newInstance(){
         ContentFragment frag = new ContentFragment();
@@ -66,6 +68,7 @@ public class ContentFragment extends Fragment {
                             if(item.getType().equals(MENU_ITEM_TYPE)){
                                 try {
                                     MenuItem menuItem = item.getData(MenuItem.class);
+                                    Log.d(TAG, "Item Name: " + menuItem.name);
                                     //Do Something with your new Item - like add it to a RecyclerView
                                 }catch (FlybitsException e){
                                     //You MenuItem does not form the same structure as the Content Template that you created in your Project. Please confirm you Content Data class.

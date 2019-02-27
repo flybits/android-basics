@@ -41,7 +41,7 @@ public class PushHistoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_push_history, container, false);
+        View v = inflater.inflate(R.layout.fragment_recycler_list, container, false);
 
         RecyclerView lstNotifications = v.findViewById(R.id.fragment_list_lstList);
         mySwipeRefreshLayout    = v.findViewById(R.id.layoutRefresh);

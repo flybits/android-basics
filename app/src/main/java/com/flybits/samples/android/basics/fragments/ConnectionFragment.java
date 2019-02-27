@@ -58,6 +58,7 @@ public class ConnectionFragment extends Fragment {
                 .addScope(KernelScope.SCOPE)
                 //Add Push Scope which is responsible for receiving Push notification from Firebase.
                 .addScope(PushScope.SCOPE)
+                //Add Context Scope which is responsible for reporting Context Data to Flybits.
                 .addScope(new ContextScope(1, TimeUnit.MINUTES))
                 .build();
 

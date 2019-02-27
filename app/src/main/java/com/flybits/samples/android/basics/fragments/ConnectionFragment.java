@@ -13,23 +13,22 @@ import com.flybits.android.kernel.KernelScope;
 import com.flybits.android.push.PushScope;
 import com.flybits.commons.library.SharedElements;
 import com.flybits.commons.library.api.FlybitsManager;
-import com.flybits.commons.library.api.idps.AnonymousIDP;
-import com.flybits.commons.library.api.idps.FlybitsIDP;
-import com.flybits.commons.library.api.idps.IDP;
-import com.flybits.commons.library.api.idps.SignedIDP;
+import com.flybits.commons.library.api.idps.*;
 import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
 import com.flybits.commons.library.api.results.callbacks.ConnectionResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
+import com.flybits.context.ContextScope;
+import com.flybits.samples.android.basics.Constants;
 import com.flybits.samples.android.basics.MainActivity;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.interfaces.IConnection;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class ConnectionFragment extends Fragment {
 
     private FlybitsManager manager;
-    private static final String PROJECT_ID = "";
 
     private IConnection iConnection;
     private Button btnConnect, btnDisconnect;
@@ -54,7 +53,7 @@ public class ConnectionFragment extends Fragment {
          * SETUP: Step 1 - Create a FlybitsManager with the various scopes
          ***********************************************************************/
         manager = new FlybitsManager.Builder(getActivity())
-                .setProjectId(PROJECT_ID)
+                .setProjectId(Constants.PROJECT_ID)
                 //Add Kernel Scope which is responsible for retrieving Content.
                 .addScope(KernelScope.SCOPE)
                 //Add Push Scope which is responsible for receiving Push notification from Firebase.
@@ -92,6 +91,8 @@ public class ConnectionFragment extends Fragment {
 
                 //Indicates that this connection is associated to user based on their AccessToken which is essentially a signed user id.
                 idp = new SignedIDP("SOME ACCESS TOKEN", "SOME SIGNATURE");
+
+                idp = new OAuthIDP(OAuthIDP.SupportedIDP.FACEBOOK, "SOME ACCESS TOKEN", "SOME CLIENT ID");
 
                 //Indicates that this connection is to an anonymous user. All data is wiped when the app is deleted or the user changes devices.
                 idp = new AnonymousIDP();

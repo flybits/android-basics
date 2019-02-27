@@ -41,7 +41,7 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recycler_list_without_swipe, container, false);
 
-        RecyclerView lstContextData = v.findViewById(R.id.fragment_list_lst_single);
+        RecyclerView lstContextData = v.findViewById(R.id.list);
         lstContextData.setHasFixedSize(false);
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
@@ -50,21 +50,7 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
         contextData   = setData();
         ContextDataAdapter adapter = new ContextDataAdapter(getActivity(), contextData, this);
         lstContextData.setAdapter(adapter);
-
         return v;
-    }
-
-    private ArrayList<String> setData(){
-        ArrayList<String> items = new ArrayList<>();
-
-        items.add(ReservedContextPlugin.ACTIVITY.getKey());
-        items.add(ReservedContextPlugin.BATTERY.getKey());
-        items.add(ReservedContextPlugin.CARRIER.getKey());
-        items.add(ReservedContextPlugin.LANGUAGE.getKey());
-        items.add(ReservedContextPlugin.NETWORK_CONNECTIVITY.getKey());
-        items.add("custom");
-
-        return items;
     }
 
     @Override
@@ -79,17 +65,37 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
 
         if (!item.equalsIgnoreCase("custom")) {
 
+            /************************************************************************
+             * Context Collection
+             * Step 1 (AndroidManifest.xml)
+             * Step 2 - Defining FlybitsContextPlugin to Start collecting
+             ***********************************************************************/
             FlybitsContextPlugin plugin = new FlybitsContextPlugin.Builder(ReservedContextPlugin.fromKey(item))
                     .setRefreshTime(UPDATE_TIME, UPDATE_TIME, TimeUnit.MINUTES)
                     .build();
 
             if (isOn) {
+                /************************************************************************
+                 * Context Collection
+                 * Step 3 - Starting the collection process
+                 ***********************************************************************/
                 ContextManager.start(getContext(), plugin);
             }else{
+                /************************************************************************
+                 * Context Collection
+                 * Step 4 - Stopping the collection process
+                 ***********************************************************************/
                 ContextManager.stop(getContext(), plugin);
             }
         }else{
             if (isOn) {
+                /************************************************************************
+                 * Custom Context Collection
+                 * Step 1 (HeadphonesData.java class)
+                 * Step 2 (HeadphonesService.java class)
+                 * Step 3 (AndroidManifest.xml)
+                 * Step 4 - Defining GCM Task to start collecting
+                 ***********************************************************************/
                 GcmNetworkManager mGcmNetworkManager = GcmNetworkManager.getInstance(getActivity());
                 PeriodicTask.Builder task = new PeriodicTask.Builder()
                         .setTag(HeadphonesService.class.getSimpleName())
@@ -101,6 +107,10 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
                         .setService(HeadphonesService.class);
                 mGcmNetworkManager.schedule(task.build());
             }else{
+                /************************************************************************
+                 * Custom Context Collection
+                 * Step 5 - Stopping the custom collection process
+                 ***********************************************************************/
                 GcmNetworkManager mGcmNetworkManager = GcmNetworkManager.getInstance(getActivity());
                 try {
                     mGcmNetworkManager.cancelTask(HeadphonesService.class.getSimpleName(), HeadphonesService.class);
@@ -109,5 +119,16 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
                 }
             }
         }
+    }
+
+    private ArrayList<String> setData(){
+        ArrayList<String> items = new ArrayList<>();
+        items.add(ReservedContextPlugin.ACTIVITY.getKey());
+        items.add(ReservedContextPlugin.BATTERY.getKey());
+        items.add(ReservedContextPlugin.CARRIER.getKey());
+        items.add(ReservedContextPlugin.LANGUAGE.getKey());
+        items.add(ReservedContextPlugin.NETWORK_CONNECTIVITY.getKey());
+        items.add("custom");
+        return items;
     }
 }

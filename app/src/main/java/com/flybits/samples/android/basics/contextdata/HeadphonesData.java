@@ -10,9 +10,13 @@ import com.flybits.context.models.ContextData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/************************************************************************
+ * Custom Context Collection
+ * Step 1a - Create a class that extends ContextData
+ ***********************************************************************/
 public class HeadphonesData extends ContextData implements Parcelable {
 
-    private static final String YOUR_PROJECT_NAME = "";
+    private static final String YOUR_PROJECT_NAME = "LOOK IN CONTEXT PLUGINS TAB OF YOUR FLYBITS PROJECT FOR THIS VALUE";
     private boolean isConnected;
 
     public HeadphonesData(){}
@@ -21,6 +25,10 @@ public class HeadphonesData extends ContextData implements Parcelable {
         super();
         AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
+        /************************************************************************
+         * Custom Context Collection
+         * Step 1b - Determine whether or not there is a headset connected to the device
+         ***********************************************************************/
         if (am == null)
             isConnected = false;
 
@@ -43,11 +51,6 @@ public class HeadphonesData extends ContextData implements Parcelable {
         isConnected = false;
     }
 
-    /**
-     * Constructor used for un-flattening a {@code BatteryData} parcel.
-     *
-     * @param in the parcel that contains the un-flattened {@code BatteryData} parcel.
-     */
     protected HeadphonesData(Parcel in){
         super();
         this.isConnected = in.readInt() == 1;
@@ -79,6 +82,11 @@ public class HeadphonesData extends ContextData implements Parcelable {
 
     @Override
     public String toJson() {
+        /************************************************************************
+         * Custom Context Collection
+         * Step 1c - Create JSON object to be sent to the server
+         ***********************************************************************/
+
         JSONObject object = new JSONObject();
         try {
             object.put("isConnected", isConnected);
@@ -98,9 +106,6 @@ public class HeadphonesData extends ContextData implements Parcelable {
         dest.writeLong(getTime());
     }
 
-    /**
-     * Parcelable.Creator that instantiates {@code HeadsetData} objects
-     */
     public static final Creator<HeadphonesData> CREATOR = new Creator<HeadphonesData>() {
         public HeadphonesData createFromParcel(Parcel in) {
             return new HeadphonesData(in);

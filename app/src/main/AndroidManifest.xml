@@ -21,12 +21,14 @@
             </intent-filter>
         </activity>
 
+        <!-- Push Setup Step 1 - Register Push Service -->
         <service android:name=".services.BasicsFCMReceiver">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
+        <!-- Context Collection Step 1 - Register Context Plugin services that will be activated -->
         <service android:name="com.flybits.context.plugins.activity.ActivityContextPluginService"
                  android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
                  android:exported="true">
@@ -34,7 +36,6 @@
                 <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
             </intent-filter>
         </service>
-
         <service android:name="com.flybits.context.plugins.battery.BatteryContextPluginService"
                  android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
                  android:exported="true">
@@ -65,6 +66,8 @@
                 <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
             </intent-filter>
         </service>
+
+        <!-- Custom Context Collection Step 3 - Register Context Plugin services that will be activated-->
         <service android:name=".contextdata.HeadphonesService"
                  android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
                  android:exported="true">

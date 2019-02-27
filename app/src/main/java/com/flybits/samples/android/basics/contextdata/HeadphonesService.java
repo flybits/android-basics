@@ -5,12 +5,20 @@ import android.util.Log;
 import com.flybits.context.models.ContextData;
 import com.flybits.context.services.FlybitsContextPluginService;
 
+/************************************************************************
+ * Custom Context Collection
+ * Step 2a - Create a Service class that extends FlybitsContextPluginService
+ ***********************************************************************/
 public class HeadphonesService extends FlybitsContextPluginService {
 
     private final static String _TAG = "PluginHeadphones";
 
     @Override
     public ContextData getData() {
+        /************************************************************************
+         * Custom Context Collection
+         * Step 2b - Implement logic for getting Context Values
+         ***********************************************************************/
         Log.d(_TAG, "Getting HeadphonePluggedInService Data");
         return new HeadphonesData(getContext());
     }

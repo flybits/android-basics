@@ -2,7 +2,7 @@
 
 <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_list_lst_single"
+        android:id="@+id/list"
         android:clipToPadding="true"
         android:scrollbars="vertical"
         android:layout_width="match_parent"

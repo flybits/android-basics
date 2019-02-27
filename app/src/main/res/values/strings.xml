@@ -14,6 +14,10 @@
     <string name="sideMenu3">Push History</string>
     <string name="sideMenu4">Context Data</string>
 
+    <!-- Button -->
+    <string name="btnStart">Start</string>
+    <string name="btnStop">Stop</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

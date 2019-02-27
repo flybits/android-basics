@@ -53,12 +53,13 @@ public class ConnectionFragment extends Fragment {
         /************************************************************************
          * SETUP: Step 1 - Create a FlybitsManager with the various scopes
          ***********************************************************************/
-        manager = new FlybitsManager.Builder(getContext())
+        manager = new FlybitsManager.Builder(getActivity())
                 .setProjectId(PROJECT_ID)
                 //Add Kernel Scope which is responsible for retrieving Content.
                 .addScope(KernelScope.SCOPE)
                 //Add Push Scope which is responsible for receiving Push notification from Firebase.
                 .addScope(PushScope.SCOPE)
+                .addScope(new ContextScope(1, TimeUnit.MINUTES))
                 .build();
 
 

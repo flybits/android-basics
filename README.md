@@ -7,9 +7,9 @@ Download
 --------
 Download the latest AAR from [JCenter](https://bintray.com/flybits-inc/v3) or grab via Gradle:
 
-    implementation "com.flybits.v3:context:1.6.0"
-    implementation "com.flybits.v3:kernel:1.6.0"
-    implementation "com.flybits.v3:push:1.6.0"
+    implementation 'com.flybits.v3:context:1.7.0'
+    implementation 'com.flybits.v3:kernel:1.7.0'
+    implementation 'com.flybits.v3:push:1.7.0'
 
 License
 -------

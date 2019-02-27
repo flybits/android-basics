@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.flybits.samples.android.basics.fragments.ConnectionFragment;
 import com.flybits.samples.android.basics.fragments.ContentFragment;
+import com.flybits.samples.android.basics.fragments.ContextDataFragment;
 import com.flybits.samples.android.basics.fragments.PushHistoryFragment;
 import com.flybits.samples.android.basics.interfaces.IConnection;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_CONNECT = "TAG_FRAGMENT_CONNECTION";
     private static final String TAG_CONTENT = "TAG_FRAGMENT_CONTENT";
     private static final String TAG_PUSH_HISTORY = "TAG_FRAGMENT_PUSH_HISTORY";
+    private static final String TAG_CONTEXT = "TAG_FRAGMENT_CONTEXT";
 
     private TextView txtUserId;
 
@@ -81,6 +83,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_push_history:
                 tagFragment = TAG_PUSH_HISTORY;
                 fragmentSelected = PushHistoryFragment.newInstance();
+                break;
+            case R.id.nav_context:
+                tagFragment = TAG_CONTEXT;
+                fragmentSelected = ContextDataFragment.newInstance();
                 break;
         }
 

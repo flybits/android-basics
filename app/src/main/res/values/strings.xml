@@ -12,6 +12,7 @@
     <string name="sideMenu1">Connecting</string>
     <string name="sideMenu2">Content</string>
     <string name="sideMenu3">Push History</string>
+    <string name="sideMenu4">Context Data</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

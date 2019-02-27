@@ -5,17 +5,21 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_connection"
-                android:icon="@mipmap/ic_launcher"
-                android:title="@string/sideMenu1"/>
+            android:id="@+id/nav_connection"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/sideMenu1"/>
         <item
-                android:id="@+id/nav_content"
-                android:icon="@mipmap/ic_launcher"
-                android:title="@string/sideMenu2"/>
+            android:id="@+id/nav_content"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/sideMenu2"/>
         <item
-                android:id="@+id/nav_push_history"
-                android:icon="@mipmap/ic_launcher"
-                android:title="@string/sideMenu3"/>
+            android:id="@+id/nav_push_history"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/sideMenu3"/>
+        <item
+            android:id="@+id/nav_context"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/sideMenu4"/>
     </group>
 
 </menu>

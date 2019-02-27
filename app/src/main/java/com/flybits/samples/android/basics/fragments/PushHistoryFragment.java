@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.flybits.android.push.models.Push;
 import com.flybits.android.push.models.results.PushResult;
 import com.flybits.android.push.utils.PushQueryParameters;
+import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
 import com.flybits.commons.library.api.results.callbacks.PagedResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
 import com.flybits.samples.android.basics.R;
@@ -58,6 +59,20 @@ public class PushHistoryFragment extends Fragment {
                     @Override
                     public void onRefresh() {
                         getNotifications();
+                        /************************************************************************
+                         * Step 3 - Delete specific push notification
+                         ***********************************************************************/
+                        pushNotifications.get(0).delete(getContext(), new BasicResultCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onException(FlybitsException exception) {
+
+                            }
+                        });
                     }
                 }
         );
@@ -71,12 +86,18 @@ public class PushHistoryFragment extends Fragment {
     }
 
     private void getNotifications(){
+        /************************************************************************
+         * Step 1 - Define the filters for retrieving the notifications
+         ***********************************************************************/
         PushQueryParameters parameters = new PushQueryParameters.Builder()
                 .setPaging(NUMBER_OF_ITEMS_TO_DISPLAY, 0)
                 .setCaching(10)
                 .build();
 
-        result = Push.get(getActivity(), parameters, new PagedResultCallback<Push>() {
+        /************************************************************************
+         * Step 2 - Get the notifications
+         ***********************************************************************/
+        result = Push.get(getContext(), parameters, new PagedResultCallback<Push>() {
             @Override
             public void onSuccess(ArrayList<Push> items) {
                 loadPush(items);

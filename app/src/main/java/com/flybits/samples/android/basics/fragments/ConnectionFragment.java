@@ -101,14 +101,11 @@ public class ConnectionFragment extends Fragment {
                 /************************************************************************
                  * SETUP: Step 3 - Call connect with the newly created IDP
                  ***********************************************************************/
-                manager.connect(idp, new ConnectionResultCallback() {
+                manager.connect(idp, new BasicResultCallback() {
                     @Override
-                    public void onConnected() {
+                    public void onSuccess() {
                         connected();
                     }
-
-                    @Override
-                    public void notConnected() {}
 
                     @Override
                     public void onException(FlybitsException exception) {}

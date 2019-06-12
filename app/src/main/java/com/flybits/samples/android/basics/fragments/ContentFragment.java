@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import com.flybits.android.kernel.ContentAnalytics;
 import com.flybits.android.kernel.models.Content;
 import com.flybits.android.kernel.utilities.ContentParameters;
 import com.flybits.commons.library.api.results.callbacks.PagedResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
+import com.flybits.commons.library.models.internal.Pagination;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.contentdata.MenuOption;
 
@@ -58,7 +60,7 @@ public class ContentFragment extends Fragment {
 
                 Content.get(getContext(), parameters, new PagedResultCallback<Content>() {
                     @Override
-                    public void onSuccess(ArrayList<Content> items) {
+                    public void onSuccess(ArrayList<Content> items, Pagination pagination) {
                         /************************************************************************
                          * SETUP: Step 2 - Look at com.flybits.samples.android.basics.contentdata.MenuOption class.
                          *        Step 3 - Parse Content into your Content Data class -
@@ -67,7 +69,7 @@ public class ContentFragment extends Fragment {
                             //Make the item is of the type you want (Get this from your Content Template in the Dev Portal
                             if(item.getType().equals(MENU_ITEM_TYPE)){
                                 try {
-                                    MenuOption menuItem = item.getData(MenuOption.class);
+                                    MenuOption menuItem = item.getData(getContext(), MenuOption.class);
                                     Log.d(TAG, "Item Name: " + menuItem.name);
                                     //Do Something with your new Item - like add it to a RecyclerView
                                 }catch (FlybitsException e){
@@ -103,8 +105,15 @@ public class ContentFragment extends Fragment {
 
                 Content.get(getContext(), parameters, new PagedResultCallback<Content>() {
                     @Override
-                    public void onSuccess(ArrayList<Content> items) {
-
+                    public void onSuccess(ArrayList<Content> items, Pagination pagination) {
+                        /************************************************************************
+                         * Once you retrieve data you can record analytics on that Content data like views and clicks
+                         ***********************************************************************/
+                        ContentAnalytics analytics = new ContentAnalytics(getContext());
+                        for (Content item : items) {
+                            analytics.trackViewed(item, System.currentTimeMillis());
+                        }
+                        //For clicks use trackEngaged(content, System.currentTimeMillis());
                     }
 
                     @Override

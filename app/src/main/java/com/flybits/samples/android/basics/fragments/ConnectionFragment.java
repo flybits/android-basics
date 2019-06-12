@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.flybits.android.kernel.KernelScope;
 import com.flybits.android.push.PushScope;
-import com.flybits.commons.library.SharedElements;
+import com.flybits.commons.library.SharedElementsFactory;
 import com.flybits.commons.library.api.FlybitsManager;
 import com.flybits.commons.library.api.idps.*;
 import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
@@ -66,7 +66,7 @@ public class ConnectionFragment extends Fragment {
         //Setup main languages
         ArrayList<String> listOfLanguages = new ArrayList<>();
         listOfLanguages.add(CODE_ENGLISH_LANGUAGE);
-        SharedElements.INSTANCE.setLocalization(listOfLanguages);
+        SharedElementsFactory.INSTANCE.get(getContext()).setLocalization(listOfLanguages);
     }
 
     @Nullable

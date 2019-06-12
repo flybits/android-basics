@@ -17,6 +17,7 @@ import com.flybits.android.push.utils.PushQueryParameters;
 import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
 import com.flybits.commons.library.api.results.callbacks.PagedResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
+import com.flybits.commons.library.models.internal.Pagination;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.fragments.adapters.NotificationAdapter;
 
@@ -99,7 +100,7 @@ public class PushHistoryFragment extends Fragment {
          ***********************************************************************/
         result = Push.get(getContext(), parameters, new PagedResultCallback<Push>() {
             @Override
-            public void onSuccess(ArrayList<Push> items) {
+            public void onSuccess(ArrayList<Push> items, Pagination pagination) {
                 loadPush(items);
             }
 

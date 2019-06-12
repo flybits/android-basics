@@ -8,6 +8,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.flybits.android.push.FlybitsNotificationManager;
 import com.flybits.android.push.PushManager;
+import com.flybits.android.push.analytics.PushAnalytics;
 import com.flybits.android.push.exceptions.FlybitsPushException;
 import com.flybits.android.push.models.Push;
 import com.flybits.commons.library.api.results.callbacks.ObjectResultCallback;
@@ -42,6 +43,12 @@ public class BasicsFCMReceiver extends FirebaseMessagingService {
                  * Valid Flybits Push Notification
                  ***********************************************************************/
                 displayPushSimple(getApplicationContext(), push);
+
+                /************************************************************************
+                 * Once you retrieve push notification you can record analytics on that push data like views and clicks
+                 ***********************************************************************/
+                PushAnalytics analytics = new PushAnalytics(getBaseContext());
+                analytics.trackViewed(push, System.currentTimeMillis());
             }
 
             @Override

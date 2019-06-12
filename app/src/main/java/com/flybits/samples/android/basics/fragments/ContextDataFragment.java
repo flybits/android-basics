@@ -10,16 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.flybits.commons.library.logging.Logger;
+import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
+import com.flybits.commons.library.exceptions.FlybitsException;
 import com.flybits.context.ContextManager;
 import com.flybits.context.ReservedContextPlugin;
 import com.flybits.context.plugins.FlybitsContextPlugin;
 import com.flybits.samples.android.basics.R;
+import com.flybits.samples.android.basics.contextdata.HeadphonesData;
 import com.flybits.samples.android.basics.contextdata.HeadphonesService;
 import com.flybits.samples.android.basics.fragments.adapters.ContextDataAdapter;
 import com.flybits.samples.android.basics.interfaces.IContextDataChange;
-import com.google.android.gms.gcm.GcmNetworkManager;
-import com.google.android.gms.gcm.PeriodicTask;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -88,6 +88,11 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
                 ContextManager.stop(getContext(), plugin);
             }
         }else{
+
+            FlybitsContextPlugin pluginHeadphones = new FlybitsContextPlugin.Builder(HeadphonesService.class)
+                    .setRefreshTime(UPDATE_TIME, UPDATE_TIME, TimeUnit.MINUTES)
+                    .build();
+
             if (isOn) {
                 /************************************************************************
                  * Custom Context Collection
@@ -96,29 +101,31 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
                  * Step 3 (AndroidManifest.xml)
                  * Step 4 - Defining GCM Task to start collecting
                  ***********************************************************************/
-                GcmNetworkManager mGcmNetworkManager = GcmNetworkManager.getInstance(getActivity());
-                PeriodicTask.Builder task = new PeriodicTask.Builder()
-                        .setTag(HeadphonesService.class.getSimpleName())
-                        .setPeriod(TimeUnit.MINUTES.toSeconds(UPDATE_TIME))
-                        .setFlex(TimeUnit.MINUTES.toSeconds(UPDATE_TIME))
-                        .setUpdateCurrent(true)
-                        .setPersisted(true)
-                        .setRequiredNetwork(PeriodicTask.NETWORK_STATE_ANY)
-                        .setService(HeadphonesService.class);
-                mGcmNetworkManager.schedule(task.build());
+                ContextManager.start(getContext(), pluginHeadphones);
             }else{
                 /************************************************************************
                  * Custom Context Collection
                  * Step 5 - Stopping the custom collection process
                  ***********************************************************************/
-                GcmNetworkManager mGcmNetworkManager = GcmNetworkManager.getInstance(getActivity());
-                try {
-                    mGcmNetworkManager.cancelTask(HeadphonesService.class.getSimpleName(), HeadphonesService.class);
-                } catch (IllegalArgumentException ex) {
-                    Logger.exception("FlybitsContextPlugin.stop", ex);
-                }
+                ContextManager.stop(getContext(), pluginHeadphones);
             }
         }
+    }
+
+    private void manuallySendContext(){
+
+        HeadphonesData data = new HeadphonesData(getContext());
+        data.updateNow(getContext(), new BasicResultCallback() {
+            @Override
+            public void onSuccess() {
+                //Successfully sent Context Value to server
+            }
+
+            @Override
+            public void onException(FlybitsException exception) {
+                //Something went wrong. Check the exception.
+            }
+        });
     }
 
     private ArrayList<String> setData(){

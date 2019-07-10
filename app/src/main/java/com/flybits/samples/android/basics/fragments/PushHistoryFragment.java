@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.flybits.android.push.models.Push;
 import com.flybits.android.push.models.results.PushResult;
 import com.flybits.android.push.utils.PushQueryParameters;
@@ -60,20 +61,6 @@ public class PushHistoryFragment extends Fragment {
                     @Override
                     public void onRefresh() {
                         getNotifications();
-                        /************************************************************************
-                         * Step 3 - Delete specific push notification
-                         ***********************************************************************/
-                        pushNotifications.get(0).delete(getContext(), new BasicResultCallback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-
-                            @Override
-                            public void onException(FlybitsException exception) {
-
-                            }
-                        });
                     }
                 }
         );
@@ -102,6 +89,23 @@ public class PushHistoryFragment extends Fragment {
             @Override
             public void onSuccess(ArrayList<Push> items, Pagination pagination) {
                 loadPush(items);
+
+                if (items.size() > 0) {
+                    /************************************************************************
+                     * Step 3 - Delete specific push notification
+                     ***********************************************************************/
+                    items.get(0).delete(getContext(), new BasicResultCallback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onException(FlybitsException exception) {
+
+                        }
+                    });
+                }
             }
 
             @Override

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.flybits.android.push.FlybitsNotificationManager;
 import com.flybits.android.push.PushManager;
 import com.flybits.android.push.analytics.PushAnalytics;
@@ -39,6 +40,18 @@ public class BasicsFCMReceiver extends FirebaseMessagingService {
         PushManager.parsePushNotification(getBaseContext(), data, new ObjectResultCallback<Push>() {
             @Override
             public void onSuccess(Push push) {
+
+                /************************************************************************
+                 * Using a custom Notification Type
+                 ***********************************************************************/
+                //Metadata id used to unique identify the custom notification
+                String metadataId = push.getMetadataID();
+                Log.d("Testing", metadataId);
+
+                //Json as a String value that represents the custom notification fields
+                String json = push.getCustomFieldsAsString();
+                Log.d("Testing", json);
+
                 /************************************************************************
                  * Valid Flybits Push Notification
                  ***********************************************************************/

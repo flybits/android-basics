@@ -18,7 +18,6 @@ import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
 import com.flybits.commons.library.api.results.callbacks.ConnectionResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
 import com.flybits.context.ContextScope;
-import com.flybits.samples.android.basics.Constants;
 import com.flybits.samples.android.basics.MainActivity;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.interfaces.IConnection;

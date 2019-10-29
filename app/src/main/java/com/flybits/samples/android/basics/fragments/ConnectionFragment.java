@@ -18,6 +18,7 @@ import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
 import com.flybits.commons.library.api.results.callbacks.ConnectionResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
 import com.flybits.context.ContextScope;
+import com.flybits.samples.android.basics.Constants;
 import com.flybits.samples.android.basics.MainActivity;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.interfaces.IConnection;
@@ -48,17 +49,16 @@ public class ConnectionFragment extends Fragment {
         //Indicates that this is in debug mode ... logs will be recorded in the logcat
         FlybitsManager.setDebug();
 
+        FlybitsManager.addScope(KernelScope.SCOPE);
+        FlybitsManager.addScope(PushScope.SCOPE);
+        FlybitsManager.addScope(new ContextScope(1, TimeUnit.MINUTES));
+
         /************************************************************************
          * SETUP: Step 1 - Create a FlybitsManager with the various scopes
          ***********************************************************************/
         manager = new FlybitsManager.Builder(getActivity())
+                //Please make sure you enter your own PROJECT_ID in this constants file
                 .setProjectId(Constants.PROJECT_ID)
-                //Add Kernel Scope which is responsible for retrieving Content.
-                .addScope(KernelScope.SCOPE)
-                //Add Push Scope which is responsible for receiving Push notification from Firebase.
-                .addScope(PushScope.SCOPE)
-                //Add Context Scope which is responsible for reporting Context Data to Flybits.
-                .addScope(new ContextScope(1, TimeUnit.MINUTES))
                 .build();
 
 

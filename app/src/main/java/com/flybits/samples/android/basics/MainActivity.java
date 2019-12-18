@@ -1,8 +1,12 @@
 package com.flybits.samples.android.basics;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,11 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import com.flybits.samples.android.basics.fragments.ConnectionFragment;
 import com.flybits.samples.android.basics.fragments.ContentFragment;
 import com.flybits.samples.android.basics.fragments.ContextDataFragment;
 import com.flybits.samples.android.basics.fragments.PushHistoryFragment;
 import com.flybits.samples.android.basics.interfaces.IConnection;
+import com.flybits.samples.android.basics.workers.PeriodicLocationRetrievalWorker;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IConnection {
@@ -27,6 +40,8 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG_CONTEXT = "TAG_FRAGMENT_CONTEXT";
 
     private TextView txtUserId;
+
+    private static final int REQUEST_LOCATION = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +64,45 @@ public class MainActivity extends AppCompatActivity
 
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_connection));
         navigationView.setCheckedItem(R.id.nav_connection);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+        } else {
+            startLocation();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if(requestCode == REQUEST_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocation();
+            }
+        }
+    }
+
+    private void startLocation(){
+        System.out.println("Location permissions granted, starting location on periodic worker");
+
+        PeriodicWorkRequest locationWorker =
+                new PeriodicWorkRequest.Builder(PeriodicLocationRetrievalWorker.class, 15, TimeUnit.MINUTES)
+                        .addTag("LOCATION_WORKER")
+                        .build();
+
+        WorkManager.getInstance().enqueueUniquePeriodicWork(
+                "LOCATION_WORKER",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                locationWorker);
+
+        System.out.println("Location permissions granted, starting location on one-time worker");
+        OneTimeWorkRequest locationWorkerOneTime =
+                new OneTimeWorkRequest.Builder(PeriodicLocationRetrievalWorker.class)
+                .build();
+
+        WorkManager.getInstance().enqueueUniqueWork("OYO",
+                ExistingWorkPolicy.KEEP,locationWorkerOneTime);
     }
 
     @Override

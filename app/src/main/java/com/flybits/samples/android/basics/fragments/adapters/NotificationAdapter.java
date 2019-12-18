@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.flybits.android.push.models.Push;
+
+import com.flybits.android.push.models.newPush.DisplayablePush;
+import com.flybits.android.push.models.newPush.Push;
 import com.flybits.samples.android.basics.R;
 
 import java.text.DateFormat;
@@ -43,9 +45,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Push notification = notifications.get(position);
             ViewHolderItem viewHolder = (ViewHolderItem) viewHolderParent;
 
-            viewHolder.txtTitle.setText(notification.getTitle());
-            viewHolder.txtMessage.setText(notification.getMessage());
-            viewHolder.txtDate.setText(getPrettyTime(notification.getTimestamp()));
+            if (notification instanceof DisplayablePush){
+                viewHolder.txtTitle.setText(((DisplayablePush) notification).getTitle());
+                viewHolder.txtMessage.setText(((DisplayablePush) notification).getMessage());
+                viewHolder.txtDate.setText(getPrettyTime(notification.getTimestamp()));
+            }
         }
     }
 

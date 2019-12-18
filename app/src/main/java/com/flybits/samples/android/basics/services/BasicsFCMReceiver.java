@@ -14,6 +14,7 @@ public class BasicsFCMReceiver extends PushService {
     @NotNull
     @Override
     public String getNotificationChannelId(@NotNull Push push) {
+        
         return BasicsApplication.NOTIFICATION_CHANNEL_FLYBITS;
     }
 

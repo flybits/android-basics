@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.flybits.android.push.models.Push;
-import com.flybits.android.push.models.results.PushResult;
+import com.flybits.android.push.api.PushAPIManager;
+import com.flybits.android.push.models.newPush.Push;
 import com.flybits.android.push.utils.PushQueryParameters;
 import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
 import com.flybits.commons.library.api.results.callbacks.PagedResultCallback;
@@ -21,6 +21,8 @@ import com.flybits.commons.library.exceptions.FlybitsException;
 import com.flybits.commons.library.models.internal.Pagination;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.fragments.adapters.NotificationAdapter;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,6 @@ public class PushHistoryFragment extends Fragment {
     private SwipeRefreshLayout mySwipeRefreshLayout;
     private ArrayList<Push> pushNotifications;
     private NotificationAdapter adapter;
-    private PushResult result;
 
     public static Fragment newInstance(){
         PushHistoryFragment frag = new PushHistoryFragment();
@@ -85,23 +86,23 @@ public class PushHistoryFragment extends Fragment {
         /************************************************************************
          * Step 2 - Get the notifications
          ***********************************************************************/
-        result = Push.get(getContext(), parameters, new PagedResultCallback<Push>() {
+        PushAPIManager.get(getContext(), parameters, new PagedResultCallback<Push>() {
             @Override
-            public void onSuccess(ArrayList<Push> items, Pagination pagination) {
+            public void onSuccess(@NotNull ArrayList<Push> items, @NotNull Pagination pagination) {
                 loadPush(items);
 
                 if (items.size() > 0) {
                     /************************************************************************
                      * Step 3 - Delete specific push notification
                      ***********************************************************************/
-                    items.get(0).delete(getContext(), new BasicResultCallback() {
+                    PushAPIManager.delete(items.get(0).getId(), getContext(), new BasicResultCallback() {
                         @Override
                         public void onSuccess() {
 
                         }
 
                         @Override
-                        public void onException(FlybitsException exception) {
+                        public void onException(@NotNull FlybitsException e) {
 
                         }
                     });
@@ -109,12 +110,14 @@ public class PushHistoryFragment extends Fragment {
             }
 
             @Override
-            public void onException(FlybitsException exception) {
-                //SOMETHING WENT WRONG
+            public void onLoadedAllItems() {
+
             }
 
             @Override
-            public void onLoadedAllItems() { }
+            public void onException(@NotNull FlybitsException e) {
+                //SOMETHING WENT WRONG
+            }
         });
     }
 

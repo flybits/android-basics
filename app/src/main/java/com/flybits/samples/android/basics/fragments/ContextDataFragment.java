@@ -17,7 +17,7 @@ import com.flybits.context.ReservedContextPlugin;
 import com.flybits.context.plugins.FlybitsContextPlugin;
 import com.flybits.samples.android.basics.R;
 import com.flybits.samples.android.basics.contextdata.HeadphonesData;
-import com.flybits.samples.android.basics.contextdata.HeadphonesService;
+import com.flybits.samples.android.basics.contextdata.HeadphonesWorker;
 import com.flybits.samples.android.basics.fragments.adapters.ContextDataAdapter;
 import com.flybits.samples.android.basics.interfaces.IContextDataChange;
 
@@ -67,8 +67,7 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
 
             /************************************************************************
              * Context Collection
-             * Step 1 (AndroidManifest.xml)
-             * Step 2 - Defining FlybitsContextPlugin to Start collecting
+             * Step 1 - Defining FlybitsContextPlugin to Start collecting
              ***********************************************************************/
             FlybitsContextPlugin plugin = new FlybitsContextPlugin.Builder(ReservedContextPlugin.fromKey(item))
                     .setRefreshTime(UPDATE_TIME, UPDATE_TIME, TimeUnit.MINUTES)
@@ -77,19 +76,19 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
             if (isOn) {
                 /************************************************************************
                  * Context Collection
-                 * Step 3 - Starting the collection process
+                 * Step 2 - Starting the collection process
                  ***********************************************************************/
                 ContextManager.start(getContext(), plugin);
             }else{
                 /************************************************************************
                  * Context Collection
-                 * Step 4 - Stopping the collection process
+                 * Step 3 - Stopping the collection process
                  ***********************************************************************/
                 ContextManager.stop(getContext(), plugin);
             }
         }else{
 
-            FlybitsContextPlugin pluginHeadphones = new FlybitsContextPlugin.Builder(HeadphonesService.class)
+            FlybitsContextPlugin pluginHeadphones = new FlybitsContextPlugin.Builder(HeadphonesWorker.class, true)
                     .setRefreshTime(UPDATE_TIME, UPDATE_TIME, TimeUnit.MINUTES)
                     .build();
 
@@ -97,15 +96,13 @@ public class ContextDataFragment extends Fragment implements IContextDataChange 
                 /************************************************************************
                  * Custom Context Collection
                  * Step 1 (HeadphonesData.java class)
-                 * Step 2 (HeadphonesService.java class)
-                 * Step 3 (AndroidManifest.xml)
-                 * Step 4 - Defining GCM Task to start collecting
+                 * Step 2 (HeadphonesWorker.kt class)
                  ***********************************************************************/
                 ContextManager.start(getContext(), pluginHeadphones);
             }else{
                 /************************************************************************
                  * Custom Context Collection
-                 * Step 5 - Stopping the custom collection process
+                 * Step 3 - Stopping the custom collection process
                  ***********************************************************************/
                 ContextManager.stop(getContext(), pluginHeadphones);
             }

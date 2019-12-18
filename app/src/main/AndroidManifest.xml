@@ -71,15 +71,6 @@
             </intent-filter>
         </service>
 
-        <!-- Custom Context Collection Step 3 - Register Context Plugin services that will be activated-->
-        <service android:name=".contextdata.HeadphonesService"
-                 android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
-                 android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
-            </intent-filter>
-        </service>
-
     </application>
 
 </manifest>

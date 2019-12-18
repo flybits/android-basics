@@ -6,6 +6,8 @@ import android.os.Build
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.flybits.commons.library.api.results.callbacks.BasicResultCallback
+import com.flybits.commons.library.exceptions.FlybitsException
 import com.flybits.context.plugins.location.LocationData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -42,8 +44,13 @@ class PeriodicLocationRetrievalWorker(context: Context, workerParameters: Worker
                 // Using Tasks.await to get the result synchronously without callback.
                 val lastLocation = Tasks.await(fusedLocationClient.lastLocation)
                 if (lastLocation != null) {
-                    Log.d("LocationReceiver", "Received new location: ${lastLocation.latitude}, ${lastLocation.longitude}")
-                    LocationData(lastLocation)
+
+                    //Send To Flybits
+                    val data = LocationData(lastLocation)
+
+                    //Null is for callback which you can implement but i am not sure if you care about the result.
+                    data.updateNow(applicationContext, null)
+
                 } else {
                     return Result.retry()
                 }

@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void startLocation(){
+        /**
+         * MAKE SURE YOU START THIS AFTER YOU HAVE CONNECTED TO FLYBITS OTHERWISE THERE IS NO SESSION
+         * TO SEND LOCATION DATA FOR
+         */
+
         System.out.println("Location permissions granted, starting location on periodic worker");
 
         PeriodicWorkRequest locationWorker =

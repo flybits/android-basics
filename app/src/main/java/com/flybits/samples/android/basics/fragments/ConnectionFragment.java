@@ -17,6 +17,7 @@ import com.flybits.commons.library.api.idps.*;
 import com.flybits.commons.library.api.results.callbacks.BasicResultCallback;
 import com.flybits.commons.library.api.results.callbacks.ConnectionResultCallback;
 import com.flybits.commons.library.exceptions.FlybitsException;
+import com.flybits.commons.library.logging.VerbosityLevel;
 import com.flybits.context.ContextScope;
 import com.flybits.samples.android.basics.Constants;
 import com.flybits.samples.android.basics.MainActivity;
@@ -47,7 +48,7 @@ public class ConnectionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Indicates that this is in debug mode ... logs will be recorded in the logcat
-        FlybitsManager.setDebug();
+        FlybitsManager.setLoggingVerbosity(VerbosityLevel.ALL);
 
         FlybitsManager.addScope(KernelScope.SCOPE);
         FlybitsManager.addScope(PushScope.SCOPE);

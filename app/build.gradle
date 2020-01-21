@@ -39,7 +39,7 @@ dependencies {
 
     implementation 'com.flybits.v3:push:2.0.0'
     implementation 'com.flybits.v3:kernel:2.0.0'
-    implementation 'com.flybits.v3:context:2.0.0'
+    implementation 'com.flybits.v3:context:2.1.1'
 
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61"

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class ContentFragment extends Fragment {
 
-    public static final String CACHING_KEY_RELEVANT = "com.flybits.basics.caching.RELEVANT";
     public static final String MENU_ITEM_TYPE = "menuitem";
     public static final String TAG = "_CONTENT_FRAGMENT";
 
